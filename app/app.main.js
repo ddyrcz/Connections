@@ -15,10 +15,11 @@ var AppComponent = (function () {
     }
     AppComponent = __decorate([
         core_1.Component({
-            selector: 'my-app',
-            template: '<h1>{{appName}}</h1>',
-            styles: [
-                'h1{background:Blue; color: white; box-shadow:2px 2px 2px 0 rgba(0, 0, 0, 0.3); }'
+            selector: 'app',
+            moduleId: module.id,
+            templateUrl: 'main/main.html',
+            styleUrls: [
+                'main/main.css'
             ]
         }), 
         __metadata('design:paramtypes', [])
@@ -26,4 +27,4 @@ var AppComponent = (function () {
     return AppComponent;
 }());
 exports.AppComponent = AppComponent;
-//# sourceMappingURL=app.component.js.map
+//# sourceMappingURL=app.main.js.map

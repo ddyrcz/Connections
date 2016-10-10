@@ -9,21 +9,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var platform_browser_1 = require('@angular/platform-browser');
-var app_main_1 = require('./app.main');
-var app_panel_1 = require('./app.panel');
-var AppModule = (function () {
-    function AppModule() {
+var PanelComponent = (function () {
+    function PanelComponent() {
     }
-    AppModule = __decorate([
-        core_1.NgModule({
-            imports: [platform_browser_1.BrowserModule],
-            declarations: [app_main_1.AppComponent, app_panel_1.PanelComponent],
-            bootstrap: [app_main_1.AppComponent]
+    PanelComponent = __decorate([
+        core_1.Component({
+            selector: 'panel',
+            moduleId: module.id,
+            templateUrl: 'panel/panel.html',
+            styleUrls: [
+                'panel/panel.css'
+            ]
         }), 
         __metadata('design:paramtypes', [])
-    ], AppModule);
-    return AppModule;
+    ], PanelComponent);
+    return PanelComponent;
 }());
-exports.AppModule = AppModule;
-//# sourceMappingURL=app.module.js.map
+exports.PanelComponent = PanelComponent;
+//# sourceMappingURL=app.panel.js.map
