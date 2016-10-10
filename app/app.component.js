@@ -11,11 +11,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var AppComponent = (function () {
     function AppComponent() {
+        this.appName = 'Friends';
     }
     AppComponent = __decorate([
         core_1.Component({
             selector: 'my-app',
-            template: '<h1>Facebook App</h1>'
+            template: '<h1>{{appName}}</h1>',
+            styles: [
+                'h1{background:Blue; color: white; box-shadow:2px 2px 2px 0 rgba(0, 0, 0, 0.3); }'
+            ]
         }), 
         __metadata('design:paramtypes', [])
     ], AppComponent);
