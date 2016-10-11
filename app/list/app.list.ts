@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Item } from './Item';
+import {Item} from '../model/Item';
 import { ItemService } from './items.service';
 
 @Component({
@@ -16,7 +16,7 @@ import { ItemService } from './items.service';
 export class ListComponent {
     items: Item[];
 
-    constructor(private _itemsService : ItemService){
+    constructor(private _itemsService: ItemService) {
         this.items = _itemsService.getFriends();
     }
 

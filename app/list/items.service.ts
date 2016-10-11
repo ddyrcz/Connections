@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Item} from './Item';
+import {Item} from '../model/Item';
 
 @Injectable()
 
@@ -8,7 +8,7 @@ export class ItemService{
 
     constructor(){
         this.items = [
-            { id: 1, name:'Kamil'},
+            { id: 1, name:'Dawid'},
             { id: 2, name:'Michał'}
         ]
     }
