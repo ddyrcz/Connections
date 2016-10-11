@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Item } from './Item';
+import { ItemService } from './items.service';
 
 @Component({
     selector: 'list',
@@ -6,14 +8,16 @@ import { Component } from '@angular/core';
     templateUrl: 'index.html',
     styleUrls: [
         'style.css'
-    ]
+    ],
+    providers: [ItemService]
 })
 
+
 export class ListComponent {
-    items = [
-        { id: 1, name: 'Dawid' },
-        { id: 2, name: 'Kamil' },
-        { id: 3, name: 'Jarek' },
-        { id: 4, name: 'Michał' }         
-    ];
+    items: Item[];
+
+    constructor(private _itemsService : ItemService){
+        this.items = _itemsService.getFriends();
+    }
+
 }
