@@ -1,7 +1,7 @@
 module.exports = {
   "development": {
     "username": "ddyrcz",
-    "password": '!Offspring15projs',
+    "password": '',
     "database": "connections",
     "host": "127.0.0.1",
     "dialect": "mysql"
