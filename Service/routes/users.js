@@ -4,7 +4,6 @@ var router = express.Router();
 var User = require('../models').User;
 var Post = require('../models').Post;
 
-/* GET users listing. */
 router.get('/:id', (req, res, next) => {
   User.findById(req.params.id, {
     include: Post
