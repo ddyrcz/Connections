@@ -6,13 +6,18 @@ var Post = require('../models').Post;
 
 /* GET users listing. */
 router.get('/:id', (req, res, next) => {
-  var idUser = req.params.id;
-  res.json(usersDal.find(idUser));
+  User.findById(req.params.id, {
+    include: Post
+  })
+    .then((user) => {
+      res.json(user);
+    })
+    .catch((err) => {
+      res.status(500).json(err);
+    })
 });
 
 router.get('/', (req, res, next) => {
-  // res.json(usersDal.findAll());
-
   User.findAll({
     include: Post
   })
