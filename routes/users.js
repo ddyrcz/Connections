@@ -5,27 +5,34 @@ var User = require('../models').User;
 var Post = require('../models').Post;
 
 router.get('/:id', (req, res, next) => {
-  User.findById(req.params.id, {
-    include: Post
-  })
-    .then((user) => {
-      res.json(user);
+    User.findById(req.params.id, {
+        include: Post
     })
-    .catch((err) => {
-      res.status(500).json(err);
-    })
+        .then((user) => {
+            res.json(user);
+        })
+        .catch((err) => {
+            res.status(500).json(err);
+        })
 });
 
 router.get('/', (req, res, next) => {
-  User.findAll({
-    include: Post
-  })
-    .then((users) => {
-      res.json(users);
+    User.findAll({
+        include: Post
     })
-    .catch((err) => {
-      res.status(500).json(err);
-    })
+        .then((users) => {
+            res.json(users);
+        })
+        .catch((err) => {
+            res.status(500).json(err);
+        })
+});
+
+router.post('/', (req, res) => {
+    User.create(req.body)
+        .then((user) => {
+            res.json(user);
+        });
 });
 
 module.exports = router;

@@ -1,14 +1,14 @@
 module.exports = {
     "development": {
         "username": "ddyrcz",
-        "password": '!Offspring15projs',
+        "password": '',
         "database": "connections",
         "host": "127.0.0.1",
         "dialect": "mysql"
     },
     "test": {
         "username": "root",
-        "password": '!Offspring15projs',
+        "password": '',
         "database": "connections_test",
         "host": "127.0.0.1",
         "dialect": "mysql",
