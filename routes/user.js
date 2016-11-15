@@ -1,5 +1,4 @@
 var express = require('express');
-var usersDal = require('../data-access/users-dal');
 var router = express.Router();
 var User = require('../models').User;
 var Post = require('../models').Post;
@@ -9,7 +8,11 @@ router.get('/:id', (req, res, next) => {
         include: Post
     })
         .then((user) => {
-            res.json(user);
+            if (user) {
+                res.json(user);
+            } else {
+                res.status(404).end();
+            }
         })
         .catch((err) => {
             res.status(500).json(err);

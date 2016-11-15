@@ -1,8 +1,6 @@
 process.env.NODE_ENV = 'test';
 
 let User = require('../models').User;
-let Post = require('../models').Post;
-
 
 let chai = require('chai');
 let chaiHttp = require('chai-http');
@@ -14,12 +12,11 @@ chai.use(chaiHttp);
 describe('Users', () => {
     beforeEach((done) => {
         User.destroy({ where: {} });
-        Post.destroy({ where: {} });
         done();
     });
 
     describe('Gets all the users', () => {
-        it('it should GET all the users', (done) => {
+        it('it should get zero users', (done) => {
             chai.request(server)
                 .get('/users')
                 .end((err, res) => {
@@ -32,7 +29,7 @@ describe('Users', () => {
     });
 
     describe('Gets a user by given id', () => {
-        it('it should get a user by given id', (done) => {
+        it('it should find a user by given id', (done) => {
             User.create({ 'name': 'Michal' })
                 .then((user) => {
                     chai.request(server)
@@ -45,6 +42,15 @@ describe('Users', () => {
                         })
                 })
         });
+
+        it('it should return 404 status code', (done) => {
+            chai.request(server)
+                .get(`/users/${1}`)
+                .end((err, res) => {
+                    res.should.have.status(404);
+                    done();
+                })
+        })
     })
 
     describe('Creates a new user', () => {
