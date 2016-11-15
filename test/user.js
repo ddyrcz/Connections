@@ -12,13 +12,13 @@ let should = chai.should();
 chai.use(chaiHttp);
 
 describe('Users', () => {
-    before((done) => {
+    beforeEach((done) => {
         User.destroy({ where: {} });
         Post.destroy({ where: {} });
         done();
     });
 
-    describe('Get all the users', () => {
+    describe('Gets all the users', () => {
         it('it should GET all the users', (done) => {
             chai.request(server)
                 .get('/users')
@@ -31,9 +31,23 @@ describe('Users', () => {
         });
     });
 
-    describe('Creates a new user', () => {
+    describe('Gets a user by given id', () => {
+        it('it should get a user by given id', (done) => {
+            User.create({ 'name': 'Michal' })
+                .then((user) => {
+                    chai.request(server)
+                        .get(`/users/${user.id}`)
+                        .end((err, res) => {
+                            res.should.have.status(200);
+                            res.body.should.be.a('object');
+                            res.body.should.have.property('name').eql('Michal');
+                            done();
+                        })
+                })
+        });
+    })
 
-        var idUser;
+    describe('Creates a new user', () => {
         it('it should create a new user', (done) => {
             let user = {
                 name: 'Michal'
@@ -50,40 +64,5 @@ describe('Users', () => {
                     done();
                 });
         });
-
-
-        it('it should get one user', (done) => {
-            chai.request(server)
-                .get('/users')
-                .end((err, res) => {
-                    res.should.have.status(200);
-                    res.body.should.be.a('array');
-                    res.body.length.should.be.eql(1);
-                    done();
-                })
-        });
-
-        describe('The created user makes a post', () => {
-            it('it should tell the new user to make a post', (done) => {
-
-                let post = {
-                    'content': 'Hello every one!',
-                    'userId': idUser
-                }
-
-                chai.request(server)
-                    .post('/posts')
-                    .send(post)
-                    .end((err, res) => {
-                        res.should.have.status(200);
-                        res.body.should.be.a('object');
-                        res.body.should.have.property('content').eql('Hello every one!');
-                        res.body.should.have.property('userId').eql(idUser);
-                        done();
-                    });
-
-            })
-        });
     });
-
 });
