@@ -1,6 +1,6 @@
 process.env.NODE_ENV = 'test';
 
-let User = require('../models').User;
+let User = require('../model/user')
 
 let chai = require('chai');
 let chaiHttp = require('chai-http');
@@ -14,6 +14,13 @@ describe('Users', () => {
         User.destroy({ where: {} });
         done();
     });
+
+    let user = {
+        'name': 'Michal',
+        'lastName': 'Kowalski',
+        'login': 'mkowalski',
+        'password': 'mk'
+    }
 
     describe('Gets all the users', () => {
         it('should get zero users', (done) => {
@@ -30,14 +37,18 @@ describe('Users', () => {
 
     describe('Gets a user by given id', () => {
         it('should find a user by given id', (done) => {
-            User.create({ 'name': 'Michal' })
+            User.create(user)
                 .then((user) => {
                     chai.request(server)
                         .get(`/users/${user.id}`)
                         .end((err, res) => {
                             res.should.have.status(200);
                             res.body.should.be.a('object');
+                            res.body.should.have.property('id');
                             res.body.should.have.property('name').eql('Michal');
+                            res.body.should.have.property('lastName').eql('Kowalski');
+                            res.body.should.have.property('login').eql('mkowalski');
+                            res.body.should.have.property('password').eql('mk');
                             done();
                         })
                 })
@@ -55,9 +66,6 @@ describe('Users', () => {
 
     describe('Creates a new user', () => {
         it('should create a new user', (done) => {
-            let user = {
-                name: 'Michal'
-            }
             chai.request(server)
                 .post('/users')
                 .send(user)
@@ -66,7 +74,9 @@ describe('Users', () => {
                     res.body.should.be.a('object');
                     res.body.should.have.property('id');
                     res.body.should.have.property('name').eql('Michal');
-                    idUser = res.body.id;
+                    res.body.should.have.property('lastName').eql('Kowalski');
+                    res.body.should.have.property('login').eql('mkowalski');
+                    res.body.should.have.property('password').eql('mk');
                     done();
                 });
         });

@@ -1,7 +1,7 @@
 process.env.NODE_ENV = 'test';
 
-let Post = require('../models').Post;
-let User = require('../models').User;
+let Post = require('../model/post')
+let User = require('../model/user')
 
 let chai = require('chai');
 let chaiHttp = require('chai-http');
@@ -15,6 +15,13 @@ describe('Posts', () => {
         Post.destroy({ where: {} });
         done();
     });
+
+    let user = {
+        'name': 'Michal',
+        'lastName': 'Kowalski',
+        'login': 'mkowalski',
+        'password': 'mk'
+    }
 
     describe('Gets all the posts', () => {
         it('should get zero posts', (done) => {
@@ -31,11 +38,11 @@ describe('Posts', () => {
 
     describe('Creates a new post', () => {
         it('should create a user that make a post', (done) => {
-            User.create({ name: 'Dawid' })
+            User.create(user)
                 .then(user => {
                     let post = {
-                        content: 'Hello world!',
-                        userId: user.id
+                        content: 'Hello world!'//,
+                        //userId: user.id
                     }
                     chai.request(server)
                         .post('/posts')
@@ -50,12 +57,12 @@ describe('Posts', () => {
         })
     })
 
-    // describe('Gets posts for user', () => {
-    //     it('should get two posts', (done) => {
-    //         User.create({name : 'Dawid'})
-    //         .then(user => {
-    //             Post.create()
-    //         })
-    //     })
-    // });
+    //     // describe('Gets posts for user', () => {
+    //     //     it('should get two posts', (done) => {
+    //     //         User.create({name : 'Dawid'})
+    //     //         .then(user => {
+    //     //             Post.create()
+    //     //         })
+    //     //     })
+    //     // });
 })
