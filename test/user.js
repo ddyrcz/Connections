@@ -16,7 +16,7 @@ describe('Users', () => {
     });
 
     describe('Gets all the users', () => {
-        it('it should get zero users', (done) => {
+        it('should get zero users', (done) => {
             chai.request(server)
                 .get('/users')
                 .end((err, res) => {
@@ -29,7 +29,7 @@ describe('Users', () => {
     });
 
     describe('Gets a user by given id', () => {
-        it('it should find a user by given id', (done) => {
+        it('should find a user by given id', (done) => {
             User.create({ 'name': 'Michal' })
                 .then((user) => {
                     chai.request(server)
@@ -43,7 +43,7 @@ describe('Users', () => {
                 })
         });
 
-        it('it should return 404 status code', (done) => {
+        it('should return 404 status code', (done) => {
             chai.request(server)
                 .get(`/users/${1}`)
                 .end((err, res) => {
@@ -54,7 +54,7 @@ describe('Users', () => {
     })
 
     describe('Creates a new user', () => {
-        it('it should create a new user', (done) => {
+        it('should create a new user', (done) => {
             let user = {
                 name: 'Michal'
             }

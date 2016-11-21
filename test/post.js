@@ -17,7 +17,7 @@ describe('Posts', () => {
     });
 
     describe('Gets all the posts', () => {
-        it('it should get zero posts', (done) => {
+        it('should get zero posts', (done) => {
             chai.request(server)
                 .get('/posts')
                 .end((err, res) => {
@@ -30,7 +30,7 @@ describe('Posts', () => {
     })
 
     describe('Creates a new post', () => {
-        it('it should create a user that make a post', (done) => {
+        it('should create a user that make a post', (done) => {
             User.create({ name: 'Dawid' })
                 .then(user => {
                     let post = {
@@ -49,4 +49,13 @@ describe('Posts', () => {
                 })
         })
     })
+
+    // describe('Gets posts for user', () => {
+    //     it('should get two posts', (done) => {
+    //         User.create({name : 'Dawid'})
+    //         .then(user => {
+    //             Post.create()
+    //         })
+    //     })
+    // });
 })
