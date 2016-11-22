@@ -29,11 +29,26 @@ router.get('/', (req, res, next) => {
         })
 });
 
+router.patch('/follow/:userId', (req, res) => {
+    
+    // // It should be taken from token
+    // req.userId = 1;
+
+    // User.findById(req.params.userId)
+    //     .then(user => {
+
+    //     })
+    res.end();
+})
+
 router.post('/', (req, res) => {
     User.create(req.body)
         .then((user) => {
             res.json(user);
-        });
+        })
+        .catch((err) => {
+            res.status(500).json(err);
+        })
 });
 
 module.exports = router;

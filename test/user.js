@@ -81,4 +81,27 @@ describe('Users', () => {
                 });
         });
     });
+
+    describe('Follow the user', () => {
+        it('should make Michal is following Dawid', (done) => {
+            let toFollow = {
+                'name': 'Dawid',
+                'lastName': 'Dyrcz',
+                'login': 'ddyrcz',
+                'password': 'dd'
+            }
+            User.create(user)
+                .then(user => {
+                    User.create(toFollow)
+                        .then(toFollow => {
+                            chai.request(server)
+                                .patch(`/users/follow/${toFollow.id}`)
+                                .end((err, res) => {
+                                    res.should.have.status(200);
+                                    done();
+                                })
+                        })
+                })
+        })
+    });
 });

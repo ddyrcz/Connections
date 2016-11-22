@@ -1,11 +1,9 @@
-var Sequelize = require('sequelize');
-var config = require('../config/resolver')
-
-var sequelize = new Sequelize(config.database, config.username, config.password, config);
+var instance = require('../db').instance;
+var Sequelize = require('../db').Sequelize;
 
 var Post = require('./post');
 
-var User = sequelize.define('user', {
+var User = instance.define('user', {
     name: {
         type: Sequelize.STRING(50),
         allowNull: false
@@ -26,8 +24,7 @@ var User = sequelize.define('user', {
     }
 });
 
-User.belongsToMany(User, { as: 'frineds', through: 'user_friends' })
+User.belongsToMany(User, { as: 'followers', through: 'user_followers' })
 User.hasMany(Post)
-sequelize.sync()
 
 module.exports = User;
