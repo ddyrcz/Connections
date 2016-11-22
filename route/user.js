@@ -30,15 +30,14 @@ router.get('/', (req, res, next) => {
 });
 
 router.patch('/follow/:userId', (req, res) => {
-    
-    // // It should be taken from token
-    // req.userId = 1;
 
-    // User.findById(req.params.userId)
-    //     .then(user => {
-
-    //     })
-    res.end();
+    User.findById(req.user.userId).then(logged => {
+        User.findById(req.params.userId).then(user => {
+            user.addFollower(logged).then(() => {
+                res.json(user)
+            })
+        })
+    })
 })
 
 router.post('/', (req, res) => {

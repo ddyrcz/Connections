@@ -1,15 +1,26 @@
 var express = require('express');
+var User = require('../model/user')
 
-var router = express.router();
+var router = express.Router();
 
 router.use((req, res, next) => {
-    req.user = {
-        login: 'Admin',
-        userId: 1,
-        isAdmin: true
-    };
 
-    next();
+    User.findOrCreate({
+        where: {
+            login: 'Admin'
+        }, defaults: {
+            name: 'Admin',
+            lastName: 'Admin',
+            password: 'Admin'
+        }
+    }).spread((user, created) => {
+        req.user = {
+            login: user.login,
+            userId: user.id
+        };
+
+        next();
+    })
 })
 
 module.exports = router;

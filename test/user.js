@@ -23,22 +23,43 @@ describe('Users', () => {
     }
 
     describe('Gets all the users', () => {
-        it('should get zero users', (done) => {
+        it('should get only one user that actually is admin created for tests as a logged in user', (done) => {
             chai.request(server)
                 .get('/users')
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('array');
-                    res.body.length.should.be.eql(0);
+                    res.body.length.should.be.eql(1);
+                    done();
+                });
+        });
+    });
+
+    describe('Creates a new user', () => {
+        it('should create a new user', (done) => {
+            chai.request(server)
+                .post('/users')
+                .send(user)
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    res.body.should.have.property('id');
+                    res.body.should.have.property('name').eql('Michal');
+                    res.body.should.have.property('lastName').eql('Kowalski');
+                    res.body.should.have.property('login').eql('mkowalski');
+                    res.body.should.have.property('password').eql('mk');
                     done();
                 });
         });
     });
 
     describe('Gets a user by given id', () => {
-        it('should find a user by given id', (done) => {
-            User.create(user)
-                .then((user) => {
+        it('should create and find the user by given id', (done) => {
+            chai.request(server)
+                .post('/users')
+                .send(user)
+                .end((err, res) => {
+                    var user = res.body;
                     chai.request(server)
                         .get(`/users/${user.id}`)
                         .end((err, res) => {
@@ -64,44 +85,27 @@ describe('Users', () => {
         })
     })
 
-    describe('Creates a new user', () => {
-        it('should create a new user', (done) => {
+    describe('Follow the user', () => {
+        it('should create a new user and make the admin is following him', (done) => {
             chai.request(server)
                 .post('/users')
                 .send(user)
                 .end((err, res) => {
-                    res.should.have.status(200);
-                    res.body.should.be.a('object');
-                    res.body.should.have.property('id');
-                    res.body.should.have.property('name').eql('Michal');
-                    res.body.should.have.property('lastName').eql('Kowalski');
-                    res.body.should.have.property('login').eql('mkowalski');
-                    res.body.should.have.property('password').eql('mk');
-                    done();
-                });
-        });
-    });
+                    var user = res.body;
+                    chai.request(server)
+                        .patch(`/users/follow/${user.id}`)
+                        .end((err, res) => {
+                            res.should.have.status(200);
+                            res.body.should.be.a('object');
+                            res.body.should.have.property('id');
+                            res.body.should.have.property('name').eql('Michal');
+                            res.body.should.have.property('lastName').eql('Kowalski');
+                            res.body.should.have.property('login').eql('mkowalski');
+                            res.body.should.have.property('password').eql('mk');
 
-    describe('Follow the user', () => {
-        it('should make Michal is following Dawid', (done) => {
-            let toFollow = {
-                'name': 'Dawid',
-                'lastName': 'Dyrcz',
-                'login': 'ddyrcz',
-                'password': 'dd'
-            }
-            User.create(user)
-                .then(user => {
-                    User.create(toFollow)
-                        .then(toFollow => {
-                            chai.request(server)
-                                .patch(`/users/follow/${toFollow.id}`)
-                                .end((err, res) => {
-                                    res.should.have.status(200);
-                                    done();
-                                })
+                            done();
                         })
                 })
-        })
+        });
     });
 });
