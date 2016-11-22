@@ -13,6 +13,7 @@ chai.use(chaiHttp);
 describe('Posts', () => {
     beforeEach((done) => {
         Post.destroy({ where: {} });
+        User.destroy({ where: {} });
         done();
     });
 
@@ -41,8 +42,8 @@ describe('Posts', () => {
             User.create(user)
                 .then(user => {
                     let post = {
-                        content: 'Hello world!'//,
-                        //userId: user.id
+                        content: 'Hello world!',
+                        userId: user.id
                     }
                     chai.request(server)
                         .post('/posts')
@@ -55,14 +56,5 @@ describe('Posts', () => {
                         })
                 })
         })
-    })
-
-    //     // describe('Gets posts for user', () => {
-    //     //     it('should get two posts', (done) => {
-    //     //         User.create({name : 'Dawid'})
-    //     //         .then(user => {
-    //     //             Post.create()
-    //     //         })
-    //     //     })
-    //     // });
+    })    
 })

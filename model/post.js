@@ -1,15 +1,12 @@
-var Sequelize = require('sequelize');
-var config = require('../config/resolver')
+var instance = require('../db').instance;
+var Sequelize = require('../db').Sequelize;
 
-var sequelize = new Sequelize(config.database, config.username, config.password, config);
 
-var Post = sequelize.define('post', {
+var Post = instance.define('post', {
     content: {
         type: Sequelize.STRING(200),
         allowNull: false
     }
 })
-
-sequelize.sync();
 
 module.exports = Post;
