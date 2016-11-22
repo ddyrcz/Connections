@@ -20,7 +20,7 @@ router.get('/:id', (req, res, next) => {
 });
 
 router.get('/', (req, res, next) => {
-    User.findAll()
+    User.findAll({ include: [{ model: User, as: 'followers' }] })
         .then((users) => {
             res.json(users);
         })
