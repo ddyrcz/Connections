@@ -19,6 +19,7 @@ if (process.env.NODE_ENV == 'development') {
     app.use(logger('dev'));
 }
 
+app.use(require('./route/auth'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
