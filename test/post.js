@@ -56,5 +56,44 @@ describe('Posts', () => {
                         })
                 })
         })
-    })    
+    })
+
+    describe('Gets followers posts', () => {
+        it ('should get one post that the follower posted', (done) => {
+
+            // Creates a new user 
+            chai.request(server)
+                .post('/users')
+                .send(user)
+                .end((err, res) => {
+
+                    // New user make a post
+                    var userId = res.body.id;
+                    chai.request(server)
+                        .post('/posts')
+                        .send({ content: 'Where are my followers?', userId: userId })
+                        .end((err, res) => {
+
+                            // Admin is following hte new user
+                            chai.request(server)
+                                .patch(`/users/follow/${user.id}`)
+                                .end((err, res) => {
+
+                                    // Admin gets all posts
+                                    chai.request(server)
+                                        .get('/posts')
+                                        .end((err, res) => {
+                                            res.should.have.status(200);
+                                            res.body.should.be.a('array');
+                                            res.body.length.should.be.eql(1);
+                                            done();
+                                        })
+                                })
+
+                        })
+
+
+                })
+        });
+    })
 })
