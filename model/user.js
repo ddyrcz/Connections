@@ -28,3 +28,16 @@ User.belongsToMany(User, { as: 'followers', through: 'user_followers' })
 User.hasMany(Post)
 
 module.exports = User;
+
+
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+
+var User = new Schema({
+    name : String,
+    lastName : String,
+    login : String,
+    password : String
+})
+
+module.exports = mongoose.model('User', User);
