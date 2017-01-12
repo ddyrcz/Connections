@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./db/sync && node ./bin/www",
-    "test": "SET NODE_ENV=test&& node ./db/sync && mocha"
+    "test": "mocha"
   },
   "dependencies": {
     "body-parser": "~1.15.1",

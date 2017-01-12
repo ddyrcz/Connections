@@ -11,7 +11,7 @@ chai.use(chaiHttp);
 
 describe('Users', () => {
     beforeEach((done) => {
-        User.destroy({ where: {} });
+        User.remove({});
         done();
     });
 

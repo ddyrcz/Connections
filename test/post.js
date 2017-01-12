@@ -12,8 +12,8 @@ chai.use(chaiHttp);
 
 describe('Posts', () => {
     beforeEach((done) => {
-        Post.destroy({ where: {} });
-        User.destroy({ where: {} });
+        Post.remove({});
+        User.remove({});
         done();
     });
 
@@ -89,10 +89,7 @@ describe('Posts', () => {
                                             done();
                                         })
                                 })
-
                         })
-
-
                 })
         });
     })
