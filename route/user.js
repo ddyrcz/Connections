@@ -4,9 +4,7 @@ var User = require('../model/user')
 var Post = require('../model/post')
 
 router.get('/:id', (req, res, next) => {
-    User.findById(req.params.id, {
-        include: Post
-    })
+    User.findById(req.params.id)
         .then((user) => {
             if (user) {
                 res.json(user);
@@ -20,7 +18,7 @@ router.get('/:id', (req, res, next) => {
 });
 
 router.get('/', (req, res, next) => {
-    User.findAll({ include: [{ model: User, as: 'followers' }] })
+    User.find()
         .then((users) => {
             res.json(users);
         })
@@ -29,8 +27,9 @@ router.get('/', (req, res, next) => {
         })
 });
 
-router.patch('/follow/:userId', (req, res) => {
+router.patch('/follow/:userId', (req, res) => {    
 
+    // TODO
     User.findById(req.user.userId).then(logged => {
         User.findById(req.params.userId).then(user => {
             user.addFollower(logged).then(() => {

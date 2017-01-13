@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var Post = require('../model/post')
-var User = require('../model/user')
 
 router.get('/:id', (req, res, next) => {
     Post.findById(req.params.id, (err, post) => {
@@ -11,7 +10,7 @@ router.get('/:id', (req, res, next) => {
 });
 
 router.get('/', (req, res, next) => {
-    Post.findAll()
+    Post.find({})
         .then((posts) => {
             res.json(posts);
         })
@@ -20,7 +19,7 @@ router.get('/', (req, res, next) => {
         })
 });
 
-router.post('/', (req, res) => {
+router.post('/', (req, res) => {    
     Post.create(req.body)
         .then(function(post) {
             res.status(200).json(post);
