@@ -4,13 +4,10 @@ var Post = require('../model/post')
 var User = require('../model/user')
 
 router.get('/:id', (req, res, next) => {
-    Post.findById(req.params.id)
-        .then((post) => {
-            res.json(post);
-        })
-        .catch((err) => {
-            res.status(500).json(err);
-        })
+    Post.findById(req.params.id, (err, post) => {
+        if(err) res.status(500).json(err);
+        res.json(post);
+    })
 });
 
 router.get('/', (req, res, next) => {
