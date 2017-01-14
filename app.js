@@ -8,15 +8,14 @@ var mongoose = require('mongoose');
 var config = require('config');
 
 var auth = require('./route/auth');
-var user =  require('./route/user');
-var post =  require('./route/post');
+var user = require('./route/user');
+var post = require('./route/post');
 
 var app = express();
 
 mongoose.connect(config.get('connection'));
 
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-
 
 if (process.env.NODE_ENV == 'development') {
     app.use(logger('dev'));
@@ -56,7 +55,7 @@ if (app.get('env') === 'development') {
 // no stacktraces leaked to user
 app.use((err, req, res, next) => {
     res.status(err.status || 500);
-    res.json({        
+    res.json({
         message: err.message,
         error: {}
     });
