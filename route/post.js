@@ -3,10 +3,13 @@ var router = express.Router();
 var Post = require('../model/post')
 
 router.get('/:id', (req, res, next) => {
-    Post.findById(req.params.id, (err, post) => {
-        if(err) res.status(500).json(err);
-        res.json(post);
-    })
+    Post.findById(req.params.id)
+        .then((post) => {
+            res.json(post);
+        })
+        .catch((err) => {
+            res.status(500).json(err);
+        })
 });
 
 router.get('/', (req, res, next) => {
@@ -19,12 +22,12 @@ router.get('/', (req, res, next) => {
         })
 });
 
-router.post('/', (req, res) => {    
+router.post('/', (req, res) => {
     Post.create(req.body)
-        .then(function(post) {
+        .then(function (post) {
             res.status(200).json(post);
         })
-        .catch(function(err) {
+        .catch(function (err) {
             res.status(500).json(err);
         });
 })

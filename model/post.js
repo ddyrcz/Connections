@@ -7,7 +7,7 @@ var Post = new Schema({
   {
     name: String,
     lastname: String,
-    _id: { type: Schema.Types.ObjectId, ref: 'User' }
+    _ref: { type: Schema.Types.ObjectId, ref: 'User' }
   }
 });
 
