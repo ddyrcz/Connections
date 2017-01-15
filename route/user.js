@@ -27,16 +27,17 @@ router.get('/', (req, res, next) => {
         })
 });
 
-router.patch('/follow/:userId', (req, res) => {    
+router.patch('/follow/:userId', (req, res) => {
 
-    // TODO
-    User.findById(req.user.userId).then(logged => {
-        User.findById(req.params.userId).then(user => {
-            user.addFollower(logged).then(() => {
-                res.json(user)
-            })
-        })
-    })
+    User.update(
+        { _id: req.session.user._id },
+        { $push: { following: req.params.userId } },
+        function (err, model) {
+            if (err) res.status(500).json(err);
+
+            res.end();
+        }
+    );
 })
 
 router.post('/', (req, res) => {
