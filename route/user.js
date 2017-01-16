@@ -28,16 +28,13 @@ router.get('/', (req, res, next) => {
 });
 
 router.patch('/follow/:userId', (req, res) => {
-
-    User.update(
-        { _id: req.session.user._id },
+    User.findByIdAndUpdate(req.session.user._id,
         { $push: { following: req.params.userId } },
-        function (err, model) {
-            if (err) res.status(500).json(err);
-
-            res.end();
-        }
-    );
+        {new : true},
+        (err, user) => {
+            if(err) res.status(500).json(err);
+            res.json(user);
+        })
 })
 
 router.post('/', (req, res) => {

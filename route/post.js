@@ -3,7 +3,7 @@ var router = express.Router();
 var Post = require('../model/post')
 
 router.get('/:id', (req, res, next) => {
-    Post.findById(req.params.id)
+    Post.findById(req.params.id)        
         .then((post) => {
             res.json(post);
         })

@@ -5,24 +5,12 @@ var router = express.Router();
 
 router.use((req, res, next) => {
 
-    next();
-
-    // User.findOrCreate({
-    //     where: {
-    //         login: 'Admin'
-    //     }, defaults: {
-    //         name: 'Admin',
-    //         lastName: 'Admin',
-    //         password: 'Admin'
-    //     }
-    // }).spread((user, created) => {
-    //     req.user = {
-    //         login: user.login,
-    //         userId: user.id
-    //     };
-
-    //     next();
-    // })
+    // Set the static logged user for session purpose
+    User.findOne({ _id: '587c84bbd84edb14d01b6fa4' })
+        .then((user) => {            
+            req.session = { user: user }
+            next();
+        })
 })
 
 module.exports = router;
