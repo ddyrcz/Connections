@@ -13,6 +13,8 @@ router.get('/:id', (req, res, next) => {
 });
 
 router.get('/', (req, res, next) => {
+
+    // Get proper posts for the logged user
     Post.find({})
         .then((posts) => {
             res.json(posts);

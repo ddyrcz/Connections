@@ -12,14 +12,15 @@ chai.use(chaiHttp);
 
 describe('Posts', () => {
     beforeEach((done) => {
-        Post.remove({});
-        User.remove({});
-        done();
+        Promise.all([Post.remove({}), User.remove({})])
+            .then(result => {
+                done();
+            })
     });
 
     let user = {
         'name': 'Michal',
-        'lastName': 'Kowalski',
+        'lastname': 'Kowalski',
         'login': 'mkowalski',
         'password': 'mk'
     }
@@ -39,11 +40,17 @@ describe('Posts', () => {
 
     describe('Creates a new post', () => {
         it('should create a user that make a post', (done) => {
-            User.create(user)
-                .then(user => {
+            chai.request(server)
+                .post('/users')
+                .send(user)
+                .end((err, user) => {
                     let post = {
                         content: 'Hello world!',
-                        userId: user.id
+                        publisher: {
+                            name: user.name,
+                            lastname: user.lastname,
+                            _ref: user._id
+                        }
                     }
                     chai.request(server)
                         .post('/posts')
@@ -52,6 +59,9 @@ describe('Posts', () => {
                             res.should.have.status(200);
                             res.body.should.be.a('object');
                             res.body.should.have.property('content').eql('Hello world!');
+                            //res.body.should.have.property('publisher')
+
+                            // TODO publisher.name itp
                             done();
                         })
                 })
@@ -59,7 +69,7 @@ describe('Posts', () => {
     })
 
     describe('Gets followers posts', () => {
-        it ('should get one post that the follower posted', (done) => {
+        it('should get one post that the follower posted', (done) => {
 
             // Creates a new user 
             chai.request(server)
@@ -68,15 +78,21 @@ describe('Posts', () => {
                 .end((err, res) => {
 
                     // New user make a post
-                    var userId = res.body.id;
+                    let user = res.body;
                     chai.request(server)
                         .post('/posts')
-                        .send({ content: 'Where are my followers?', userId: userId })
+                        .send({
+                            content: 'Where are my followers?', publisher: {
+                                name: user.name,
+                                lastname: user.lastname,
+                                _ref: user._id
+                            }
+                        })
                         .end((err, res) => {
 
-                            // Admin is following hte new user
+                            // Admin is following the new user
                             chai.request(server)
-                                .patch(`/users/follow/${user.id}`)
+                                .patch(`/users/follow/${user._id}`)
                                 .end((err, res) => {
 
                                     // Admin gets all posts

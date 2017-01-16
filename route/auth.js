@@ -6,10 +6,23 @@ var router = express.Router();
 router.use((req, res, next) => {
 
     // Set the static logged user for session purpose
-    User.findOne({ _id: '587c84bbd84edb14d01b6fa4' })
-        .then((user) => {            
-            req.session = { user: user }
-            next();
+    User.findOne({ name: 'Dawid', })
+        .then((user) => {
+            if (user) {
+                req.session = { user: user }
+                next();
+            } else {
+                return User.create({
+                    name: 'Dawid',
+                    lastname: 'Dyrcz'
+                })
+            }
+        })
+        .then((user) => {
+            if (user) {
+                req.session = { user: user }
+                next();
+            }
         })
 })
 

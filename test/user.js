@@ -11,13 +11,15 @@ chai.use(chaiHttp);
 
 describe('Users', () => {
     beforeEach((done) => {
-        User.remove({});
-        done();
+        User.remove({})
+            .then(user => {
+                done();
+            });
     });
 
     let user = {
         'name': 'Michal',
-        'lastName': 'Kowalski',
+        'lastname': 'Kowalski',
         'login': 'mkowalski',
         'password': 'mk'
     }
@@ -43,9 +45,9 @@ describe('Users', () => {
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.body.should.be.a('object');
-                    res.body.should.have.property('id');
+                    res.body.should.have.property('_id');
                     res.body.should.have.property('name').eql('Michal');
-                    res.body.should.have.property('lastName').eql('Kowalski');
+                    res.body.should.have.property('lastname').eql('Kowalski');
                     res.body.should.have.property('login').eql('mkowalski');
                     res.body.should.have.property('password').eql('mk');
                     done();
@@ -61,13 +63,13 @@ describe('Users', () => {
                 .end((err, res) => {
                     var user = res.body;
                     chai.request(server)
-                        .get(`/users/${user.id}`)
+                        .get(`/users/${user._id}`)
                         .end((err, res) => {
                             res.should.have.status(200);
                             res.body.should.be.a('object');
-                            res.body.should.have.property('id');
+                            res.body.should.have.property('_id');
                             res.body.should.have.property('name').eql('Michal');
-                            res.body.should.have.property('lastName').eql('Kowalski');
+                            res.body.should.have.property('lastname').eql('Kowalski');
                             res.body.should.have.property('login').eql('mkowalski');
                             res.body.should.have.property('password').eql('mk');
                             done();
@@ -76,9 +78,10 @@ describe('Users', () => {
         });
 
         it('should return 404 status code', (done) => {
-            chai.request(server)
-                .get(`/users/${1}`)
+            chai.request(server)                
+                .get(`/users/999cb8a32d84f10c30d64d6a`)
                 .end((err, res) => {
+                    // It should always return 404 while there is no user is the database
                     res.should.have.status(404);
                     done();
                 })
@@ -86,23 +89,16 @@ describe('Users', () => {
     })
 
     describe('Follow the user', () => {
-        it('should create a new user and make the admin is following him', (done) => {
+        it('should create a new user and make the logged user is following him', (done) => {
             chai.request(server)
                 .post('/users')
                 .send(user)
                 .end((err, res) => {
                     var user = res.body;
                     chai.request(server)
-                        .patch(`/users/follow/${user.id}`)
+                        .patch(`/users/follow/${user._id}`)
                         .end((err, res) => {
                             res.should.have.status(200);
-                            res.body.should.be.a('object');
-                            res.body.should.have.property('id');
-                            res.body.should.have.property('name').eql('Michal');
-                            res.body.should.have.property('lastName').eql('Kowalski');
-                            res.body.should.have.property('login').eql('mkowalski');
-                            res.body.should.have.property('password').eql('mk');
-
                             done();
                         })
                 })
