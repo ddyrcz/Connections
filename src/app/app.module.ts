@@ -1,4 +1,9 @@
-import {Module} from '@nestjs/common';
+import { Module } from '@nestjs/common';
+import { UsersModule } from './modules/users/users.module';
 
-@Module({})
-export class ApplicationModule {}
+@Module({
+    modules: [
+        UsersModule
+    ]
+})
+export class ApplicationModule { }
