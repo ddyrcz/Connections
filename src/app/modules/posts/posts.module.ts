@@ -1,9 +1,11 @@
-import {Module} from '@nestjs/common';
-import {PostsService} from './services/posts/posts.service';
+import { Module } from '@nestjs/common';
+import { PostsService } from './services/posts/posts.service';
+import { postsProviders } from './posts.provider';
 
 @Module({
   components: [
-    PostsService
+    PostsService,
+    ...postsProviders
   ]
 })
-export class PostsModule {}
+export class PostsModule { }

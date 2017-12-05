@@ -1,14 +1,13 @@
-import { Component } from '@nestjs/common';
+import { Component, Inject } from '@nestjs/common';
 import { UserModel } from '../../../users/models/user.model';
-import { PostModel } from '../../models/post.model';
+import { Model } from 'mongoose';
+import { Post } from '../../interfaces/post.interface';
 
 @Component()
 export class PostsService {
-    constructor() { }
+    constructor( @Inject('CatModelToken') private readonly postModel: Model<Post>) { }
 
-    getPostsForUsers(users: UserModel[], createdBefore: Date, take: number): Promise<PostModel[]> {
-        return Promise.resolve<PostModel[]>([
-            { userId: 1, content: "Hello world!" }
-        ])
+    async getPostsForUsers(users: UserModel[], createdBefore: Date, take: number): Promise<Post[]> {
+        return this.postModel.find().exec();
     }
 }
