@@ -1,6 +1,6 @@
 import { Connection } from 'mongoose';
-import { PostSchema } from './schemas/post.schema';
 import { Constants } from '../../constants';
+import { PostSchema } from './entity/post.schema'
 
 export const postsProviders = [
     {
