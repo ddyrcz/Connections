@@ -2,7 +2,7 @@ import { Document } from "mongoose";
 
 export interface Post {
     content: string;
-    publishedOn: Date;
+    createdAt: Date;
     publisherId: number;
     imageUrl: string;
 }
