@@ -1,8 +1,8 @@
-import { Schema, Types } from "mongoose";
+import { Schema, Types, SchemaTypes } from "mongoose";
 
-const schema = new Schema({
+export const UserSchema = new Schema({
     name: String,
     lastname: String,
     avatarUrl: String,
-    following: [Types.ObjectId]
+    following: [SchemaTypes.ObjectId]
 })
