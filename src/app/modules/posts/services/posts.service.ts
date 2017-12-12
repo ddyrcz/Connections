@@ -23,4 +23,9 @@ export class PostsService {
             .sort('-createdAt')
             .exec()
     }
+
+    async createPost(post: Post): Promise<Post> {
+        const postDocument = new this.postModel(post);
+        return await postDocument.save()
+    }
 }

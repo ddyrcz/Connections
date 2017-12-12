@@ -1,9 +1,16 @@
 import { Document } from "mongoose";
+import { User, UserDocument } from "../users/user.interface";
+import { ObjectId } from "mongodb";
 
 export interface Post {
     content: string;
     createdAt: Date;
-    publisherId: number;
+    user: {
+        _id: ObjectId,
+        name: String,
+        lastname: String,
+        avatarUrl: String
+    },
     imageUrl: string;
 }
 
