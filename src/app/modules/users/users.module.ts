@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { Module, forwardRef } from "@nestjs/common";
 
 import { UsersController } from "./controllers/users.controller";
 import { UsersService } from "./services/users.service";
@@ -9,7 +9,7 @@ import { PostsModule } from "../posts/posts.module";
 @Module({
   modules: [
     DatabaseModule,
-    PostsModule
+    forwardRef(() => PostsModule)
   ],
   controllers: [
     UsersController
