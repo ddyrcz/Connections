@@ -17,7 +17,7 @@ export class PostsService {
         userIds.push(userId)
 
         return await this.postModel
-            .find({ createdAt: { $lte: createdBefore } })
+            .find({ createdAt: { $lt: createdBefore } })
             .where('user._id').in(userIds)
             .limit(take)
             .sort('-createdAt')
@@ -26,7 +26,7 @@ export class PostsService {
 
     async getUserPosts(userId: ObjectId, createdBefore: Date, take: number): Promise<Post[]> {
         return await this.postModel
-            .find({ createdAt: { $lte: createdBefore } })
+            .find({ createdAt: { $lt: createdBefore } })
             .where('user._id').equals(userId)
             .limit(take)
             .sort('-createdAt')

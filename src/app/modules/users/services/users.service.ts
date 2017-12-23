@@ -11,7 +11,7 @@ export class UsersService {
     async getUsers(query: string, createdBefore: Date, take: number): Promise<User[]> {
         return await this.userModel
             .find({ $or: [{ name: { "$regex": query } }, { lastname: { "$regex": query } }] })
-            .find({ createdAt: { $lte: createdBefore } })
+            .find({ createdAt: { $lt: createdBefore } })
             .limit(take)
             .sort('-createdAt')
             .exec()
