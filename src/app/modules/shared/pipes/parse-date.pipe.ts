@@ -7,6 +7,5 @@ export class ParseDatePipe implements PipeTransform<string> {
             return new Date(value);
         }
         return new Date();
-
     }
 }

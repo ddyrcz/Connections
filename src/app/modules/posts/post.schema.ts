@@ -1,15 +1,26 @@
-import * as mongoose from 'mongoose';
+import { Schema, SchemaTypes } from 'mongoose';
 import { ObjectId } from 'mongodb';
 
-export const PostSchema = new mongoose.Schema({
+const CommentSchema = new Schema({
     content: String,
     createdAt: Date,
-    publisherId: Number,
     user: {
-        _id: mongoose.SchemaTypes.ObjectId,
+        _id: SchemaTypes.ObjectId,
+        name: String,
+        lastname: String,
+        avatarUrl: String
+    }
+})
+
+export const PostSchema = new Schema({
+    content: String,
+    createdAt: Date,
+    user: {
+        _id: SchemaTypes.ObjectId,
         name: String,
         lastname: String,
         avatarUrl: String
     },
-    imageUrl: String
+    imageUrl: String,
+    comments: [CommentSchema]
 });
