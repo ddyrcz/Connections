@@ -4,5 +4,6 @@ export const UserSchema = new Schema({
     name: String,
     lastname: String,
     avatarUrl: String,
+    createdAt: Date,
     following: [SchemaTypes.ObjectId]
 })

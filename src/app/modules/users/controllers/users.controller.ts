@@ -11,7 +11,7 @@ export class UsersController {
         private postsService: PostsService) { }
 
     @Get()
-    async getUsers( @Param('query') query: string, @Param('createdBefore', new ParseDatePipe()) createdBefore: Date, @Query('take', new ParseIntPipe()) take: number) {
+    async getUsers( @Query('query') query: string, @Query('createdBefore', new ParseDatePipe()) createdBefore: Date, @Query('take', new ParseIntPipe()) take: number) {
         return await this.usersService.getUsers(query, createdBefore, take);
     }
 

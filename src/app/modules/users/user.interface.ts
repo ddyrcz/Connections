@@ -5,6 +5,7 @@ export interface User {
     name: string,
     lastname: string,
     avatarUrl: string,
+    createdAt: Date,
     following: [ObjectId]
 }
 

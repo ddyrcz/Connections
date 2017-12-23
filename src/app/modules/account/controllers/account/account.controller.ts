@@ -10,6 +10,8 @@ export class AccountController {
 
     @Get('posts')
     async getPosts( @Query('createdBefore', new ParseDatePipe()) createdBefore: Date, @Query('take', new ParseIntPipe()) take: number) {
+
+        // from TOKEN
         const userId: ObjectId = new ObjectId("59201bfeec36dc29007cab1e")
         return await this.postsService.getUserAndFriendsPosts(userId, createdBefore, take);
     }
@@ -17,7 +19,7 @@ export class AccountController {
     @Post('posts')
     async createPost( @Body() post: PostDocument) {
 
-        // Informations from TOKEN
+        // from TOKEN
         post.user = {
             _id: new ObjectId("59201bfeec36dc29007cab1e"),
             name: "Dawid",
