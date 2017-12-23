@@ -12,13 +12,22 @@ export class PostsService {
     constructor( @Inject(Token.PostModelToken) private readonly postModel: Model<PostDocument>,
         private readonly usersService: UsersService) { }
 
-    async getPostsForUser(userId: ObjectId, createdBefore: Date, take: number): Promise<Post[]> {
+    async getUserAndFriendsPosts(userId: ObjectId, createdBefore: Date, take: number): Promise<Post[]> {
         let userIds = await this.usersService.getFollowingUsers(userId)
         userIds.push(userId)
 
         return await this.postModel
             .find({ createdAt: { $lte: createdBefore } })
             .where('user._id').in(userIds)
+            .limit(take)
+            .sort('-createdAt')
+            .exec()
+    }
+
+    async getUserPosts(userId: ObjectId, createdBefore: Date, take: number): Promise<Post[]> {
+        return await this.postModel
+            .find({ createdAt: { $lte: createdBefore } })
+            .where('user._id').equals(userId)
             .limit(take)
             .sort('-createdAt')
             .exec()

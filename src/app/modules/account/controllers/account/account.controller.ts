@@ -10,6 +10,6 @@ export class AccountController {
     async getPosts( @Query('createdBefore') createdBefore: Date, @Query('take') take: number) {
         const userId: ObjectId = new ObjectId("59201bfeec36dc29007cab1e")
 
-        return await this.postsService.getPostsForUser(userId, createdBefore, Number(take));
+        return await this.postsService.getUserAndFriendsPosts(userId, createdBefore, Number(take));
     }
 }
