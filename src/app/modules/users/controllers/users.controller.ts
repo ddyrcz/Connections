@@ -19,4 +19,9 @@ export class UsersController {
     async getPosts( @Param('id') id: string, @Query('createdBefore', new ParseDatePipe()) createdBefore: Date, @Query('take', new ParseIntPipe()) take: number) {
         return await this.postsService.getUserPosts(new ObjectId(id), createdBefore, take);
     }
+
+    @Get(':id')
+    async getById( @Param('id') id: string) {
+        return await this.usersService.getById(id)
+    }
 }
