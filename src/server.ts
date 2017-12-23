@@ -10,7 +10,7 @@ server.use(bodyParser.json());
 
 const app: Promise<INestApplication> = NestFactory.create(ApplicationModule, server);
 app.then(instance =>
-  instance.listen(3000, () =>
-    console.log('Application is listening on port 3000')
+  instance.listen(3100, () =>
+    console.log('Application is listening on port 3100')
   )
 );
