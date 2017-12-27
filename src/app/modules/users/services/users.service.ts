@@ -19,7 +19,6 @@ export class UsersService {
 
     async getFollowingUsers(userId: ObjectId): Promise<ObjectId[]> {
         let userDocument = await this.userModel
-
             .findById(userId)
             .select('following')
             .exec()
@@ -29,5 +28,9 @@ export class UsersService {
 
     async getById(id: string): Promise<User> {
         return await this.userModel.findById(id)
+    }
+
+    async follow(followerId: string, userToFollowId: string) {
+        await this.userModel.findByIdAndUpdate(followerId, { $push: { following: new ObjectId(userToFollowId) } })
     }
 }

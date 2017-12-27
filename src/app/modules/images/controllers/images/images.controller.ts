@@ -5,26 +5,26 @@ import * as formidable from 'formidable';
 import * as cloudinary from 'cloudinary';
 import * as fs from 'fs';
 
+var config = JSON.parse(fs.readFileSync("C:\\cloudinary\\config.json") as any);
+
 cloudinary.config({
-    cloud_name: 'ddyrcz',
-    api_key: '331566296559366',
-    api_secret: '2AZBmkOhmD6OsdxvsRIWz78O73o'
+    cloud_name: config.cloud_name,
+    api_key: config.api_key,
+    api_secret: config.api_secret
 });
 
 @Controller('images')
 export class ImagesController {
-    constructor() { }
-
     @Post()
     upload( @Req() req: Request, @Res() res: Response) {
         var form = new formidable.IncomingForm();
         form.parse(req, function (err, fields, files) {
             cloudinary.uploader.upload(files.file.path, function (result) {
+                // remove file
                 fs.unlink(files.file.path, (err) => {
-                    res.json({ url: result.url })
+                    res.json({ fileUrl: result.url })
                 })
             });
-
         });
     }
 }

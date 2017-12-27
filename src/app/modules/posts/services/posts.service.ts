@@ -20,7 +20,7 @@ export class PostsService {
             .find({ createdAt: { $lt: createdBefore } })
             .where('user._id').in(userIds)
             .limit(take)
-            .sort('-createdAt')
+            .sort({ createdAt: -1 })
             .exec()
     }
 
@@ -29,7 +29,7 @@ export class PostsService {
             .find({ createdAt: { $lt: createdBefore } })
             .where('user._id').equals(userId)
             .limit(take)
-            .sort('-createdAt')
+            .sort({ createdAt: -1 })
             .exec()
     }
 
