@@ -33,4 +33,8 @@ export class UsersService {
     async follow(followerId: string, userToFollowId: string) {
         await this.userModel.findByIdAndUpdate(followerId, { $push: { following: new ObjectId(userToFollowId) } })
     }
+
+    async unfollow(followerId: string, userToUnfollowId: string) {
+        await this.userModel.findByIdAndUpdate(followerId, { $pull: { following: new ObjectId(userToUnfollowId) } })
+    }
 }

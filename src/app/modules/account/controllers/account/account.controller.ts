@@ -35,4 +35,9 @@ export class AccountController {
     async follow( @Param('id') userId: string) {
         await this.usersService.follow("59201bfeec36dc29007cab1e", userId)
     }
+
+    @Post('users/:id/unfollow')
+    async unfollow( @Param('id') userId: string) {
+        await this.usersService.unfollow("59201bfeec36dc29007cab1e", userId)
+    }
 }
