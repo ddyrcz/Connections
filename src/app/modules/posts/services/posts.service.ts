@@ -1,7 +1,7 @@
 import { Component, Inject } from "@nestjs/common";
 import { Model, Types } from "mongoose";
 
-import { PostDocument, Post } from "../post.interface";
+import { PostDocument, Post, Comment } from "../post.interface";
 import { Token } from "../../../token.enum";
 import { User, UserDocument } from "../../users/user.interface";
 import { UsersService } from "../../users/services/users.service";
@@ -36,5 +36,9 @@ export class PostsService {
     async createPost(post: Post): Promise<Post> {
         const postDocument = new this.postModel(post);
         return await postDocument.save()
+    }
+
+    async addComment(postId: string, comment: Comment) {
+        await this.postModel.findByIdAndUpdate(postId, { $push: { comments: comment } })
     }
 }
