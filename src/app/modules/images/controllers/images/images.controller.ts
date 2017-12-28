@@ -5,7 +5,7 @@ import * as formidable from 'formidable';
 import * as cloudinary from 'cloudinary';
 import * as fs from 'fs';
 
-var config = JSON.parse(fs.readFileSync("C:\\cloudinary\\config.json") as any);
+var config = JSON.parse(fs.readFileSync("C:\\connections\\cloudinary\\config.json") as any);
 
 cloudinary.config({
     cloud_name: config.cloud_name,

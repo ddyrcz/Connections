@@ -5,5 +5,7 @@ export const UserSchema = new Schema({
     lastname: String,
     avatarUrl: String,
     createdAt: Date,
-    following: [SchemaTypes.ObjectId]
+    following: [SchemaTypes.ObjectId],
+    email: String,
+    password: String
 })

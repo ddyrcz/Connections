@@ -5,6 +5,7 @@ import { DatabaseModule } from "./modules/database/database.module";
 import { DemoModule } from "./modules/demo/demo.module";
 import { AccountModule } from "./modules/account/account.module";
 import { ImagesModule } from "./modules/images/images.module";
+import { AuthModule } from "./modules/auth/auth.module";
 
 @Module({
     modules: [
@@ -12,7 +13,8 @@ import { ImagesModule } from "./modules/images/images.module";
         PostsModule,
         AccountModule,
         DemoModule,
-        ImagesModule
+        ImagesModule,
+        AuthModule
     ],
 })
 export class ApplicationModule { }
