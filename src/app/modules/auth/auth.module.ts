@@ -4,6 +4,7 @@ import { SHA256Service } from './services/sha256/sha256.service';
 import { UsersModule } from '../users/users.module';
 import { AuthService } from './services/auth/auth.service';
 import { JwtGenerator } from './services/jwt-generator/jwt-generator.service';
+import { JwtValidator } from './services/jwt-validator/jwt-validator.service';
 
 
 @Module({
@@ -16,7 +17,9 @@ import { JwtGenerator } from './services/jwt-generator/jwt-generator.service';
   components: [
     SHA256Service,
     AuthService,
-    JwtGenerator
-  ]
+    JwtGenerator,
+    JwtValidator
+  ],
+  exports: [JwtValidator]
 })
 export class AuthModule { }

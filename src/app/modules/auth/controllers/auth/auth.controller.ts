@@ -16,8 +16,8 @@ export class AuthController {
             _id: user._id
         })
 
-        response.json({
-            token: token
-        })
+        response.setHeader("x-access-token", token)
+
+        response.json(user)
     }
 }
