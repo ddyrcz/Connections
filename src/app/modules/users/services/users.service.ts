@@ -3,10 +3,12 @@ import { User, UserDocument } from '../user.interface';
 import { Token } from '../../../token.enum';
 import { Model } from 'mongoose';
 import { ObjectId } from 'mongodb';
+import { SHA256Service } from '../../auth/services/sha256/sha256.service';
 
 @Component()
 export class UsersService {
-    constructor( @Inject(Token.UserModelToken) private readonly userModel: Model<UserDocument>) { }
+    constructor( @Inject(Token.UserModelToken) private readonly userModel: Model<UserDocument>,
+        private sha256: SHA256Service) { }
 
     async getUsers(query: string, createdBefore: Date, take: number): Promise<User[]> {
         return await this.userModel
@@ -36,5 +38,11 @@ export class UsersService {
 
     async unfollow(followerId: string, userToUnfollowId: string) {
         await this.userModel.findByIdAndUpdate(followerId, { $pull: { following: new ObjectId(userToUnfollowId) } })
+    }
+
+    async registerUser(user: User) {
+        user.password = this.sha256.hash(user.password)
+        const createdUser = new this.userModel(user);
+        return await createdUser.save();
     }
 }

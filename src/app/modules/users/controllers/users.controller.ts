@@ -1,8 +1,9 @@
-import { Controller, Get, Query, Param, ParseIntPipe } from "@nestjs/common";
+import { Controller, Get, Query, Param, ParseIntPipe, Post, Body } from "@nestjs/common";
 import { UsersService } from "../services/users.service";
 import { PostsService } from "../../posts/services/posts.service";
 import { ObjectId } from "mongodb";
 import { ParseDatePipe } from "../../shared/pipes/parse-date.pipe";
+import { User } from "../user.interface";
 
 @Controller("users")
 export class UsersController {
@@ -23,5 +24,10 @@ export class UsersController {
     @Get(':id')
     async getById( @Param('id') id: string) {
         return await this.usersService.getById(id)
+    }
+
+    @Post()
+    async registerUser( @Body() user: User) {
+        return await this.usersService.registerUser(user);
     }
 }
