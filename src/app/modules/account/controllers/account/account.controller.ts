@@ -1,9 +1,11 @@
-import { Controller, Get, Query, ParseIntPipe, Body, Post, Param } from '@nestjs/common';
+import { Controller, Get, Query, ParseIntPipe, Body, Post, Param, Req } from '@nestjs/common';
 import { PostsService } from '../../../posts/services/posts.service';
 import { ObjectId } from 'mongodb';
 import { ParseDatePipe } from '../../../shared/pipes/parse-date.pipe';
 import { PostDocument } from '../../../posts/post.interface';
 import { UsersService } from '../../../users/services/users.service';
+import { Request } from 'express';
+import { User } from '../../../users/user.interface';
 
 @Controller('account')
 export class AccountController {
@@ -11,23 +13,14 @@ export class AccountController {
         private usersService: UsersService) { }
 
     @Get('posts')
-    async getPosts( @Query('createdBefore', new ParseDatePipe()) createdBefore: Date, @Query('take', new ParseIntPipe()) take: number) {
-        // from TOKEN
-        const userId: ObjectId = new ObjectId("59201bfeec36dc29007cab1e")
-        return await this.postsService.getUserAndFriendsPosts(userId, createdBefore, take);
+    async getPosts( @Req() request: Request, @Query('createdBefore', new ParseDatePipe()) createdBefore: Date, @Query('take', new ParseIntPipe()) take: number) {
+        const user = (request as any).user
+        return await this.postsService.getUserAndFriendsPosts(new ObjectId(user._id), createdBefore, take);
     }
 
     @Post('posts')
-    async createPost( @Body() post: PostDocument) {
-
-        // from TOKEN
-        post.user = {
-            _id: new ObjectId("59201bfeec36dc29007cab1e"),
-            avatarUrl: 'https://cdn1.iconfinder.com/data/icons/ninja-things-1/1772/ninja-simple-512.png',
-            name: 'Dawid',
-            lastname: 'Dyrcz'
-        }
-
+    async createPost( @Req() request: Request, @Body() post: PostDocument) {
+        post.user = (request as any).user
         return await this.postsService.createPost(post);
     }
 

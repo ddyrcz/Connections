@@ -8,7 +8,7 @@ import * as cors from 'cors'
 
 const server = express()
 server.use(bodyParser.json());
-server.use(cors())
+server.use(cors({ exposedHeaders: "x-access-token" }))
 
 const app: Promise<INestApplication> = NestFactory.create(ApplicationModule, server);
 app.then(instance =>
