@@ -45,4 +45,10 @@ export class UsersService {
         const createdUser = new this.userModel(user);
         return await createdUser.save();
     }
+
+    async updateAvatar(userId: string, newAvatarUrl: string) {
+        return await this.userModel
+            .findByIdAndUpdate(userId, { avatarUrl: newAvatarUrl })
+            .exec()
+    }
 }

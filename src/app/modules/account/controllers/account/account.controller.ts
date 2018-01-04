@@ -7,6 +7,10 @@ import { UsersService } from '../../../users/services/users.service';
 import { Request } from 'express';
 import { User, UserDocument } from '../../../users/user.interface';
 
+interface AvaratUrl {
+    url: string
+}
+
 @Controller('account')
 export class AccountController {
     constructor(private readonly postsService: PostsService,
@@ -34,5 +38,11 @@ export class AccountController {
     async unfollow( @Req() request: Request, @Param('id') userId: string) {
         const user = (request as any).user
         await this.usersService.unfollow(user._id, userId)
+    }
+
+    @Post('avatar')
+    async updateAvatar( @Req() request: Request, @Body() avatar: AvaratUrl) {
+        const user = (request as any).user
+        return await this.usersService.updateAvatar(user._id, avatar.url);
     }
 }
