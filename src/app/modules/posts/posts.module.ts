@@ -19,7 +19,8 @@ import { UsersModule } from "../users/users.module";
     ...postsProviders
   ],
   exports: [
-    PostsService
+    PostsService,
+    ...postsProviders
   ]
 })
 export class PostsModule { }
