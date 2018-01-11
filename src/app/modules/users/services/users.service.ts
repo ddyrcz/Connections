@@ -61,7 +61,7 @@ export class UsersService {
     }
 
     private async updateAvatarInPosts(userId: string, newAvatarUrl: string) {
-        await this.postModel.update({ "user._id": new ObjectId(userId) }, { "user.avatarUrl": newAvatarUrl })
+        await this.postModel.update({ "user._id": new ObjectId(userId) }, { "user.avatarUrl": newAvatarUrl }, { multi: true })
     }
 
     private async updateAvatarInComments(userId: string, newAvatarUrl: string) {
