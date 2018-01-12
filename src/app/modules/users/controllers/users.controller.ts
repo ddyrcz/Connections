@@ -25,9 +25,4 @@ export class UsersController {
     async getById( @Param('id') id: string) {
         return await this.usersService.getById(id)
     }
-
-    @Post()
-    async registerUser( @Body() user: User) {
-        return await this.usersService.registerUser(user);
-    }
 }
