@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import * as jwt from 'jsonwebtoken';
 
 
-var config = JSON.parse(fs.readFileSync("C:\\connections\\jwt.json") as any);
+var config = JSON.parse(fs.readFileSync("/apps/connections/jwt.json") as any);
 
 @Component()
 export class JwtValidator {
