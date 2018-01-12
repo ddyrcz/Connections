@@ -10,7 +10,8 @@ export class AuthMiddleware implements NestMiddleware {
   private excludedPaths: string[]
 
   private authenticationPaths: string[] = [
-    '/auth'
+    '/auth/login',
+    '/auth/register'
   ]
 
   constructor(private tokenValidator: JwtValidator) {
