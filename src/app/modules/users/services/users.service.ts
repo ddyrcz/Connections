@@ -1,4 +1,4 @@
-import { Component, Inject } from '@nestjs/common';
+import { Component, Inject, HttpException } from '@nestjs/common';
 import { User, UserDocument } from '../user.interface';
 import { Token } from '../../../token.enum';
 import { Model } from 'mongoose';
@@ -44,9 +44,19 @@ export class UsersService {
     }
 
     async registerUser(user: User) {
+        await this.checkEmailUniqueness(user.email)
+
         user.password = this.sha256.hash(user.password)
         const createdUser = new this.userModel(user);
         return await createdUser.save();
+    }
+
+    private async checkEmailUniqueness(email: string) {
+        const numberOfSameEmails = await this.userModel.count({ email: email })
+
+        if (numberOfSameEmails > 0) {
+            throw new HttpException('Podany adres email już istnieje', 400)
+        }
     }
 
     async updateAvatar(userId: string, newAvatarUrl: string) {
