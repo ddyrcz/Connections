@@ -15,7 +15,9 @@ export class AuthService {
         const user = await this.userModel.findOne({
             email: email,
             password: hash
-        }).exec()
+        })
+            .select('-password')
+            .exec()
 
         if (!user) {
             throw new UnauthorizedException("Błędne poświadczenia")
