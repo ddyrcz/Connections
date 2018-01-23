@@ -18,6 +18,7 @@ export class UsersService {
             .find({ createdAt: { $lt: createdBefore } })
             .limit(take)
             .sort('-createdAt')
+            .select('-password')
             .exec()
     }
 
