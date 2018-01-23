@@ -63,8 +63,7 @@ export class UsersService {
 
         await this.updateAvatarInPosts(userId, newAvatarUrl);
 
-        // wait for mongoose support for MongoDB Server v.3.6
-        // await this.updateAvatarInComments(userId, newAvatarUrl);
+        await this.updateAvatarInComments(userId, newAvatarUrl);
 
         return await this.userModel
             .findByIdAndUpdate(userId, { avatarUrl: newAvatarUrl })
