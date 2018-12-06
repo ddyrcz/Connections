@@ -10,9 +10,10 @@ const server = express()
 server.use(bodyParser.json());
 server.use(cors({ exposedHeaders: "x-access-token" }))
 
-const app: Promise<INestApplication> = NestFactory.create(ApplicationModule, server);
-app.then(instance =>
-  instance.listen(3100, () =>
-    console.log('Application is listening on port 3100')
-  )
-);
+async function bootstrap() {
+  const app = await NestFactory.create(ApplicationModule);
+  await app.listen(3000);
+  console.log("works");
+  
+}
+bootstrap();
