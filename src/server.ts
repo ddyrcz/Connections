@@ -13,7 +13,7 @@ server.use(cors({ exposedHeaders: "x-access-token" }))
 async function bootstrap() {
   const app = await NestFactory.create(ApplicationModule);
   await app.listen(3000);
-  console.log("works");
+  console.log("Application is listening on port 3100");
   
 }
 bootstrap();
